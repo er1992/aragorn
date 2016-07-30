@@ -1,13 +1,11 @@
 package backend;
 
-import static spark.Spark.*;
-
 import spark.Spark;
 
 public class Application {
 
   public static void main(String[] args) {
-    Spark.port(8080);
+    Spark.port(80);
     Spark.threadPool(10);
 
     registerStaticTestRoutes();
