@@ -7,10 +7,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.SyndFeedInput;
@@ -20,8 +16,6 @@ import com.rometools.rome.io.XmlReader;
 
 public class EventLocationDataCollector {
 
-  public static String API_KEY = "AIzaSyAFrfhvQFuEyAnM7rPyVXxUXQxH193UGEc";
-
   public List<Event> events;
 
   public EventLocationDataCollector() {
@@ -30,41 +24,46 @@ public class EventLocationDataCollector {
 
   public void getEntries() throws Exception {
 
-    URL url = new URL("http://www.adelaidecitycouncil.com/Ajax/whats_on_rss_feed");
-    HttpURLConnection httpcon = (HttpURLConnection) url.openConnection();
-    // Reading the feed
-    SyndFeedInput input = new SyndFeedInput();
-    SyndFeed feed = input.build(new XmlReader(httpcon));
-    List<SyndEntry> entries = feed.getEntries();
-    Iterator<SyndEntry> itEntries = entries.iterator();
+    // URL url = new
+    // URL("http://www.adelaidecitycouncil.com/Ajax/whats_on_rss_feed");
+    // HttpURLConnection httpcon = (HttpURLConnection) url.openConnection();
+    // // Reading the feed
+    // SyndFeedInput input = new SyndFeedInput();
+    // SyndFeed feed = input.build(new XmlReader(httpcon));
+    // List<SyndEntry> entries = feed.getEntries();
+    // Iterator<SyndEntry> itEntries = entries.iterator();
+    // while (itEntries.hasNext()) {
+    // SyndEntry entry = (SyndEntry) itEntries.next();
+    // System.out.println(entry.getPublishedDate());
+    // System.out.println(entry.getUpdatedDate());
+    // Event event = new Event(entry.getTitle(), entry.getLink(),
+    // entry.getAuthor(), entry.getUpdatedDate(),
+    // entry.getDescription().getValue(), null);
+    // events.add(event);
+    // }
+    
+    RSSFeedParser parser = new RSSFeedParser("http://www.adelaidecitycouncil.com/Ajax/whats_on_rss_feed");
+    Feed feed = parser.readFeed();
 
-    while (itEntries.hasNext()) {
-      SyndEntry entry = (SyndEntry) itEntries.next();
-      Event event = new Event(entry.getTitle(), entry.getLink(), entry.getAuthor(), entry.getPublishedDate(),
-          entry.getDescription().getValue(), null);
-      Document doc = Jsoup.connect(event.link).get();
-      String location = doc.select("label label-where").text();
-
-      String apiUrl = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=" + location + "&key="
-          + API_KEY;
-      HttpRestConnection http = new HttpRestConnection();
-      String response = http.sendGet(apiUrl);
-      JSONObject json = new JSONObject(response);
-      JSONObject obj = ((JSONObject) json.getJSONArray("results").get(0)).getJSONObject("geometry");
-      event.loc = new LatLong(Double.valueOf(obj.get("lat").toString()), Double.valueOf(obj.get("long").toString()));
+    for (FeedMessage message : feed.getMessages()) {
+      System.out.println(message.getGuid());
+      Event event = new Event(message.getTitle(), message.getLink(), message.getAuthor(), message.getGuid(),
+          message.getDescription(), null);
       events.add(event);
     }
+
+
   }
-  
+
   public static class Event {
     public String title;
     public String link;
     public String author;
-    public Date date;
+    public String date;
     public String description;
     public LatLong loc;
 
-    public Event(String title, String link, String author, Date date, String description, LatLong loc) {
+    public Event(String title, String link, String author, String date, String description, LatLong loc) {
       super();
       this.title = title;
       this.link = link;
