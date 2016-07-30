@@ -8,7 +8,9 @@ import spark.Spark;
 public class Application {
   
   public static Logger log = LoggerFactory.getLogger(Application.class);
-
+  public static EventLocationDataCollector evenCollector = new EventLocationDataCollector();
+  
+  
   public static void main(String[] args) {
     Spark.port(80);
     Spark.threadPool(10);
@@ -40,7 +42,9 @@ public class Application {
   }
 
   public static void registerGetRoutes() {
-    // TODO Auto-generated method stub
+    Spark.get("/events", (request, response) -> {
+      return evenCollector.events;
+    });
 
   }
 
