@@ -27,8 +27,31 @@ function initMap() {
     },
     event: {
       icon: 'icons/event_red.svg'
+    },
+    twitter: {
+      icon: 'icons/twitter.svg'
     }
   };
+
+  //GOVHACK
+  var govhackIcon = new google.maps.MarkerImage(
+      "images/GovHack_log.svg.png",
+      new google.maps.Size(64, 64),
+      new google.maps.Point(0,0),
+      new google.maps.Point(48, 32)
+  );
+  markerId = 1;
+  govhackIcon.url += "#" + markerId;
+
+  // Set up options for the marker
+  var marker = new google.maps.Marker({
+      map: map,
+      optimized: false,
+      icon: govhackIcon,
+      id: markerId,
+      uniqueSrc: govhackIcon.url 
+
+  });
 
 
   function addMarker(feature) {
@@ -44,6 +67,24 @@ function initMap() {
       '<i class="fa fa-twitter" aria-hidden="true"></i>' + 5 + '<br>' +
       '<i class="fa fa-instagram" aria-hidden="true"></i>' + 5 + '<br>';
 
+    var iw = new google.maps.InfoWindow({
+      content: panel
+    });
+    google.maps.event.addListener(marker, "click", function (e) {
+      iw.open(map, this);
+    });
+  }
+
+  function addTwitterMarker(feature) {
+    var marker = new google.maps.Marker({
+      position: feature.position,
+      icon: icons[feature.type].icon,
+      size: new google.maps.Size(5, 5),
+      map: map
+    });
+
+    var panel =
+      feature.content;
 
     var iw = new google.maps.InfoWindow({
       content: panel
@@ -54,11 +95,6 @@ function initMap() {
   }
 
   var features = [
-    {
-      position: new google.maps.LatLng(-34.9287, 138.5999),
-      type: 'wine',
-      content: 'Wine City Party'
-    },
     {
       position: new google.maps.LatLng(-34.8389, 138.4839),
       type: 'icecream1',
@@ -76,8 +112,9 @@ function initMap() {
     }
   ];
 
+
   events.forEach( function(e) {
-    if (e.loc && e.loc.latitude && e.loc.longitude) {
+    if (e.loc && e.loc.latitude && e.loc.longitude && e.date.indexOf("2016-07") == 0) {
       let f = {};
       f.position = new google.maps.LatLng(e.loc.latitude, e.loc.longitude);
       f.type = 'event';
@@ -86,8 +123,31 @@ function initMap() {
     }
   });
 
+  myevents.forEach( function(e) {
+    let f = {};
+    f.position = new google.maps.LatLng(e.loc.latitude, e.loc.longitude);
+    f.type = 'event';
+    f.content = e.title;
+    features.push(f);
+  });
+
+  var twitterTrends = [
+  ];
+  trends.forEach( function(e) {
+    let f = {};
+    f.position = new google.maps.LatLng(e.loc.latitude, e.loc.longitude);
+    f.type = 'twitter';
+    f.content = e.hashtag;
+    twitterTrends.push(f);
+  });
+
+
   for (var i = 0, feature; feature = features[i]; i++) {
     addMarker(feature);
+  }
+
+  for (var i = 0, feature; feature = twitterTrends[i]; i++) {
+    addTwitterMarker(feature);
   }
 
 }
