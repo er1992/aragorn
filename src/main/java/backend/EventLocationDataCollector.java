@@ -1,16 +1,12 @@
-package backend;
+package main.java.backend;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
-import com.rometools.rome.feed.synd.SyndEntry;
-import com.rometools.rome.feed.synd.SyndFeed;
-import com.rometools.rome.io.SyndFeedInput;
-import com.rometools.rome.io.XmlReader;
+import main.java.backend.Feed;
+import main.java.backend.FeedMessage;
+import main.java.backend.LatLong;
+import main.java.backend.RSSFeedParser;
 
 //
 
@@ -46,7 +42,7 @@ public class EventLocationDataCollector {
     Feed feed = parser.readFeed();
 
     for (FeedMessage message : feed.getMessages()) {
-      System.out.println(message.getGuid());
+      
       Event event = new Event(message.getTitle(), message.getLink(), message.getAuthor(), message.getGuid(),
           message.getDescription(), null);
       events.add(event);

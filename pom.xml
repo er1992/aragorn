@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.pulse</groupId>
-	<artifactId>backend</artifactId>
+	<artifactId>main.java.backend</artifactId>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<resources>
@@ -19,7 +19,7 @@
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.2.1</version>
 				<configuration>
-					<mainClass>backend.Application</mainClass>
+					<mainClass>main.java.backend.Application</mainClass>
 					<arguments>
 					</arguments>
 				</configuration>

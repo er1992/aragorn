@@ -1,4 +1,4 @@
-package backend;
+package main.java.backend;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,9 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
-import backend.EventLocationDataCollector.Event;
+import main.java.backend.EventLocationDataCollector;
+import main.java.backend.EventLocationDataCollector.Event;
+import main.java.backend.EventLocationDataCollectorRunnable;
 import spark.Spark;
 
 public class Application {
@@ -66,6 +68,8 @@ public class Application {
 
   public static void registerGetRoutes() {
     Spark.get("/events", (request, response) -> {
+      response.type("application/json");
+//      response.header("Access-Control-Allow-Origin", "*");
       return new Gson().toJson(newEvents);
     });
 
