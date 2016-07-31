@@ -6,6 +6,7 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -45,7 +46,7 @@ public class HttpRestConnection {
   }
   
   // HTTP POST request
-  public String sendPost(String url) throws Exception {
+  public String sendPost(String url, String data, Map<String, String> headers) throws Exception {
 
     URL obj = new URL(url);
     HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
@@ -54,13 +55,16 @@ public class HttpRestConnection {
     con.setRequestMethod("POST");
     con.setRequestProperty("User-Agent", USER_AGENT);
     con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+    for(Map.Entry<String,String> entry : headers.entrySet()) {
+      con.setRequestProperty(entry.getKey(), entry.getValue());
+    }
 
-    String urlParameters = "sn=C02G8416DRJM&cn=&locale=&caller=&num=12345";
+    String urlParameters = "";
     
     // Send post request
     con.setDoOutput(true);
     DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-    wr.writeBytes(urlParameters);
+    wr.writeBytes(data);
     wr.flush();
     wr.close();
 

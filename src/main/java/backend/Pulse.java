@@ -3,7 +3,7 @@ package main.java.backend;
 public class Pulse {
 
   public static enum Sentiment {
-    AGGREVATED, AVERAGE, HAPPY
+    ANGER, CONTEMPT, DISGUST, FEAR, HAPPINESS, NEUTRAL, SADNESS, SURPRISE
   }
 
   public static enum Heart {
