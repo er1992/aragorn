@@ -32,7 +32,7 @@ public class Application {
   public static Logger log = LoggerFactory.getLogger(Application.class);
   public static EventLocationDataCollector eventCollector = new EventLocationDataCollector();
   public static List<Event> newEvents;
-  public static List<EventInstas> eventInstas;
+  public static List<EventInstas> eventInstasList;
 
   public static void main(String[] args) {
     Spark.port(8080);
@@ -152,7 +152,7 @@ public class Application {
       System.out.println("Sentiment: " + insta.sentiment);
     }
 
-    eventInstas = new ArrayList<>();
+    eventInstasList = new ArrayList<>();
 
     for (Event event : newEvents) {
       EventInstas eventInstas = new EventInstas(event);
@@ -163,9 +163,10 @@ public class Application {
           eventInstas.addInstas(insta);
         }
       }
+      eventInstasList.add(eventInstas);
     }
     
-    System.out.println("Instas from DB: " + newEvents.size());
+    System.out.println("Events from DB: " + newEvents.size());
 
   }
 
@@ -209,7 +210,7 @@ public class Application {
 
     Spark.get("/eventsAggregate", (request, response) -> {
       response.type("application/json");
-      return new Gson().toJson(eventInstas);
+      return new Gson().toJson(eventInstasList);
     });
 
   }
