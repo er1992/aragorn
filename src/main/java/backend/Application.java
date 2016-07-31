@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
 import main.java.backend.Pulse.Sentiment;
@@ -98,7 +99,8 @@ public class Application {
 
     } else {
       try {
-        newEvents = new Gson().fromJson(new JsonReader(new FileReader("events.json")), Event.class);
+        TypeToken<List<Event>> unmarshallingType = new TypeToken<List<Event>>(){};
+        newEvents = new Gson().fromJson(new JsonReader(new FileReader("events.json")), unmarshallingType.getType());
       } catch (Exception e) {
         e.printStackTrace();
       }
