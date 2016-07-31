@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
 import main.java.backend.Pulse.Sentiment;
@@ -99,8 +98,7 @@ public class Application {
 
     } else {
       try {
-        TypeToken<List<Event>> unmarshallingType = new TypeToken<List<Event>>(){};
-        newEvents = new Gson().fromJson(new JsonReader(new FileReader("events.json")), unmarshallingType.getType());
+        newEvents = new Gson().fromJson(new JsonReader(new FileReader("events.json")), Event.class);
       } catch (Exception e) {
         e.printStackTrace();
       }
@@ -120,8 +118,6 @@ public class Application {
       e.printStackTrace();
     }
 
-    System.out.println("Instas from DB: " + instagramData.size());
-    
     Map<String, String> headers = new HashMap<>();
     headers.put("Ocp-Apim-Subscription-Key", "8d30aab7c387402bb70c1797720e6ba8");
     headers.put("Content-Type", "application/json");
@@ -147,10 +143,6 @@ public class Application {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    
-    for (Insta insta : instagramData) {
-      System.out.println("Sentiment: " + insta.sentiment);
-    }
 
     eventInstas = new ArrayList<>();
 
@@ -164,8 +156,6 @@ public class Application {
         }
       }
     }
-    
-    System.out.println("Instas from DB: " + newEvents.size());
 
   }
 
