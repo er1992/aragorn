@@ -98,7 +98,7 @@ public class Application {
 
     } else {
       try {
-        newEvents = new Gson().fromJson(new JsonReader(new FileReader("event.json")), Event.class);
+        newEvents = new Gson().fromJson(new JsonReader(new FileReader("events.json")), Event.class);
       } catch (Exception e) {
         e.printStackTrace();
       }
