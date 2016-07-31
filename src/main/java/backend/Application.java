@@ -120,6 +120,8 @@ public class Application {
       e.printStackTrace();
     }
 
+    System.out.println("Instas from DB: " + instagramData.size());
+    
     Map<String, String> headers = new HashMap<>();
     headers.put("Ocp-Apim-Subscription-Key", "8d30aab7c387402bb70c1797720e6ba8");
     headers.put("Content-Type", "application/json");
@@ -145,6 +147,10 @@ public class Application {
     } catch (Exception e) {
       e.printStackTrace();
     }
+    
+    for (Insta insta : instagramData) {
+      System.out.println("Sentiment: " + insta.sentiment);
+    }
 
     eventInstas = new ArrayList<>();
 
@@ -158,6 +164,8 @@ public class Application {
         }
       }
     }
+    
+    System.out.println("Instas from DB: " + newEvents.size());
 
   }
 
