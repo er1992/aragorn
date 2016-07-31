@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pulse of Adelaide</title>
+  <meta name="viewport" content="initial-scale=1.0">
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="map"></div>
+
+  <div id="trends">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title">Current Twitter Trends!</h3>
+      </div>
+      <div class="panel-body">
+        #GovHack<br>
+        <label id="t-val1">100</label> tweets<br>
+        #CityOfAdelaide<br>
+        <label id="t-val2">25</label> tweets<br>
+        #HPCursedChild<br>
+        <label id="t-val3">17</label> tweets<br>
+        #AlpWinter<br>
+        <label id="t-val4">10</label> tweets<br>
+        #Blue-Bird-Exhib<br>
+        <label id="t-val5">5</label> tweets<br>
+      </div>
+    </div>
+  </div>
+
+  <div id="events">
+    <div class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title">Events Happening Now!</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+          <li>GovHack Unleashed</li>
+          <li>Alphine Winter Village</li>
+          <li>David Williamson’s Emerald City Special Event Screening</li>
+        <ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT
+  ================================= -->
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="events.js" ></script>
+  <script type="text/javascript" src="index.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTDUCfGGvoSfCF6eOH5tVjzPH0BXzUUDQ&callback=initMap"
+  async defer></script>
+  <script type="text/javascript" src="twitter-animation.js" ></script>
+</body>
+</html>
